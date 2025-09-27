@@ -1,0 +1,72 @@
+{
+  "pins": {
+    "impermanence": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "impermanence"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "4b3e914cdf97a5b536a889e939fb2fd2b043a170",
+      "url": "https://github.com/nix-community/impermanence/archive/4b3e914cdf97a5b536a889e939fb2fd2b043a170.tar.gz",
+      "hash": "04l16szln2x0ajq2x799krb53ykvc6vm44x86ppy1jg9fr82161c"
+    },
+    "nixos-hardware": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "NixOS",
+        "repo": "nixos-hardware"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "67a709cfe5d0643dafd798b0b613ed579de8be05",
+      "url": "https://github.com/NixOS/nixos-hardware/archive/67a709cfe5d0643dafd798b0b613ed579de8be05.tar.gz",
+      "hash": "1qz8j83b1zw96x9afmzjmmxccc53fpbf3s1jgnxvmaf12c9h79y3"
+    },
+    "nixpkgs": {
+      "type": "Channel",
+      "name": "nixos-25.05",
+      "url": "https://releases.nixos.org/nixos/25.05/nixos-25.05.810175.b2a3852bd078/nixexprs.tar.xz",
+      "hash": "1gmb3psnva3kw53br6z7hvnzd902vvgx3jd16z1pvnk5bpgq8xjw"
+    },
+    "opnix": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "brizzbuzz",
+        "repo": "opnix"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.7.0",
+      "revision": "ae08d9b0545edf6a6be43cd57fcd8d4191bc823a",
+      "url": "https://api.github.com/repos/brizzbuzz/opnix/tarball/v0.7.0",
+      "hash": "0f1vcyx55kagcxidinay2y1dsadnab2wyffp96ri9liz1rxwrs14"
+    },
+    "pkgs-uns": {
+      "type": "Channel",
+      "name": "nixos-unstable",
+      "url": "https://releases.nixos.org/nixos/unstable/nixos-25.11pre864002.8eaee1103447/nixexprs.tar.xz",
+      "hash": "1fz9hsjg97rnzh1pshrlvx8rydj538db2piv3jh5qwnvrl1kfdjw"
+    },
+    "sops-nix": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "Mic92",
+        "repo": "sops-nix"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "e0fdaea3c31646e252a60b42d0ed8eafdb289762",
+      "url": "https://github.com/Mic92/sops-nix/archive/e0fdaea3c31646e252a60b42d0ed8eafdb289762.tar.gz",
+      "hash": "1rj341cy0na751bpp0zs7rvw7y5ff9hxs8izi2bmicdhbv6pqwrg"
+    }
+  },
+  "version": 5
+}
