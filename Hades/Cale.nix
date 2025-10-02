@@ -35,9 +35,7 @@ users.users.cale = {
 
 services.tailscale.enable = true;
 
-sops = {
-  defaultSopsFile = ../../Nix-Secrets/secrets/secrets.yaml;
-};
+sops.secrets.cale_passwd = {};
 
 
 nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [

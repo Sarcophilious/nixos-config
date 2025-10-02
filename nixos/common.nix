@@ -1,5 +1,8 @@
 { pkgs, sources, ... }:
 {
+  imports = [
+    ./secrets.nix
+  ];
   nix = {
     package = pkgs.lix;
     settings = {

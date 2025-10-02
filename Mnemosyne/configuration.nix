@@ -8,7 +8,58 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       (sources.impermanence + "/nixos.nix")
+      #../nixos/garagefs.nix
+      (sources.sops-nix + "/modules/sops")
     ];
+
+  sops.secrets.garagefs_rpc_secret = {};
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
+
+  #services.garage = {
+  #  enable = true;
+  #  package = pkgs.garage_2;
+  #  settings = {
+  #    rpc_secret_file = "/run/var/garagefs_rpc_secret";
+  #    #db_engine = "sqlite";
+  #    replication_factor = 1;
+  #    data_dir = "/mnt/xfs1/garagefs";
+  #    metadata_dir = "/persist/garagefsMeta";
+  #    rpc_bind_addr = "[::]:3901";
+  #    s3_api = {
+  #      s3_region = "garage";
+  #      api_bind_addr = "[::]:3900";
+  #      root_domain = ".s3.garage.localhost";
+  #    };
+  #    admin = {
+  #      api_bind_addr = "[::]:3903";
+  #    };
+  #  };
+  #};
+
+  boot.supportedFilesystems = [ "xfs" ];
+
+
+  fileSystems."/mnt/xfs1" = {
+    device = "/dev/disk/by-uuid/07e77604-a41d-48b9-a2a5-5907407b749f";
+    fsType = "xfs";
+    options = ["users" "rw" "nofail"];
+  };
+  fileSystems."/mnt/xfs2" = {
+    device = "/dev/disk/by-uuid/182840bd-3e24-46fc-a4d4-f4eaaa8cc07a";
+    fsType = "xfs";
+    options = ["users"  "rw" "nofail"];
+  };
+  fileSystems."/mnt/xfs3" = {
+    device = "/dev/disk/by-uuid/3c676283-cc56-4190-bced-66f6508d091f";
+    fsType = "xfs";
+    options = ["users"  "rw" "nofail"];
+  };
+  fileSystems."/mnt/xfs4" = {
+    device = "/dev/disk/by-uuid/837684f7-0ce6-4620-a7c2-6610010f253c";
+    fsType = "xfs";
+    options = ["users"  "rw" "nofail"];
+  };
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -16,14 +67,14 @@
 
   boot.initrd = {
     enable = true;
-    supportedFilesystems = [ "btrfs" ];
+    supportedFilesystems = [ "btrfs"];
 
-    postResumeCommands = lib.mkAfter ''
-      mkdir -p /mnt/Media
+  #  postResumeCommands = lib.mkAfter ''
+  #    mkdir -p /mnt/Media
       # We first mount the btrfs root to /mnt
       # so we can manipulate btrfs subvolumes.
-      mount -o subvol=/ /dev/nvme0n1p3 /mnt
-      mount -o subvol=/Media /dev/sdb /mnt/Media
+  #    mount -o subvol=/ /dev/nvme0n1p3 /mnt
+  #    mount -o subvol=/Media /dev/sdb /mnt/Media
 
       # While we're tempted to just delete /root and create
       # a new snapshot from /root-blank, /root is already
@@ -40,22 +91,22 @@
       # Anyhow, deleting these subvolumes hasn't resulted
       # in any issues so far, except for fairly
       # benign-looking errors from systemd-tmpfiles.
-      btrfs subvolume list -o /mnt/root |
-      cut -f9 -d' ' |
-      while read subvolume; do
-        echo "deleting /$subvolume subvolume..."
-        btrfs subvolume delete "/mnt/$subvolume"
-      done &&
-      echo "deleting /root subvolume..." &&
-      btrfs subvolume delete /mnt/root
+   #   btrfs subvolume list -o /mnt/root |
+   #   cut -f9 -d' ' |
+   #   while read subvolume; do
+   #     echo "deleting /$subvolume subvolume..."
+   #     btrfs subvolume delete "/mnt/$subvolume"
+   #   done &&
+   #   echo "deleting /root subvolume..." &&
+   #   btrfs subvolume delete /mnt/root
 
-      echo "restoring blank /root subvolume..."
-      btrfs subvolume snapshot /mnt/root-blank /mnt/root
+   #   echo "restoring blank /root subvolume..."
+   #   btrfs subvolume snapshot /mnt/root-blank /mnt/root
 
-      # Once we're done rolling back to a blank snapshot,
-      # we can unmount /mnt and continue on the boot process.
-      umount /mnt
-    '';
+   #   # Once we're done rolling back to a blank snapshot,
+   #   # we can unmount /mnt and continue on the boot process.
+   #   umount /mnt
+   # '';
   };
 
   environment.persistence."/persist" = {
@@ -68,6 +119,7 @@
       "/etc/ssh/ssh_host_ed25519_key.pub"
       "/etc/ssh/ssh_host_rsa_key"
       "/etc/ssh/ssh_host_rsa_key.pub"
+      #"/etc/garage.toml"
     ];
   };
 
@@ -157,6 +209,8 @@
   #  wget
   podman-compose
   tailscale
+  xfsprogs
+  garage_2
   ];
 
   # Copy the NixOS configuration file and link it from the resulting system
