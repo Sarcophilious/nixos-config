@@ -10,6 +10,8 @@
       (sources.impermanence + "/nixos.nix")
       #../nixos/garagefs.nix
       (sources.sops-nix + "/modules/sops")
+      ./mergerfs.nix
+      ./samba.nix
     ];
 
   sops.secrets.garagefs_rpc_secret = {};
@@ -55,7 +57,7 @@
     fsType = "xfs";
     options = ["users"  "rw" "nofail"];
   };
-  fileSystems."/mnt/xfs4" = {
+  fileSystems."/mnt/parity01" = {
     device = "/dev/disk/by-uuid/837684f7-0ce6-4620-a7c2-6610010f253c";
     fsType = "xfs";
     options = ["users"  "rw" "nofail"];
